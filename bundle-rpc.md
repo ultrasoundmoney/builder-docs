@@ -2,6 +2,8 @@
 
 JSON-RPC endpoints for submitting orderflow to Ultra Sound Builder.
 
+Adding a valid auth token in the `X-Api-Key` header increases your rate limit. 
+
 ## eth_sendBundle
 
 ```jsonc
