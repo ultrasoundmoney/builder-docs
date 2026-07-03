@@ -9,7 +9,7 @@ Documentation for submitting Ethereum transactions and bundles to our builder.
 
 ## Mainnet
 
-Coinbase: `0x6c42A0b5D13059fA36D5567aB04F83BAB57bBF0e`
+Coinbase: `builder.ultrasound.eth`
 
 Pubkeys:
 
