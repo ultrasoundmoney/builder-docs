@@ -29,7 +29,9 @@ Bundle RPC: `https://builder-rpc-eu.ultrasound.money`
 
 Bundle RPC: `https://builder-rpc-us.ultrasound.money`
 
-We're deploying in TYO (Latitude TYO3) soon. Let us know if you're waiting on that geo.
+### Tokyo
+
+Bundle RPC: `https://builder-rpc-jp.ultrasound.money`
 
 ## Hoodi
 
