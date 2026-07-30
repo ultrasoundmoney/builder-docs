@@ -15,16 +15,18 @@ Adding a valid auth token in the `X-Api-Key` header increases your rate limit.
     {
       txs,                // Array[String], signed transactions (hex) to execute atomically
       blockNumber,        // (Optional) String, hex-encoded target block number; defaults to next block
-      revertingTxHashes,  // (Optional) Array[String], tx hashes allowed to revert or be discarded
-      droppingTxHashes,   // (Optional) Array[String], tx hashes allowed to be discarded but not revert
+      revertingTxHashes,  // (Optional) Array[String] or null, tx hashes allowed to revert or be discarded
+      droppingTxHashes,   // (Optional) Array[String] or null, tx hashes allowed to be discarded but not revert
       replacementUuid,    // (Optional) String, identifier for replacing or canceling this bundle
       refundPercent,      // (Optional) Number, 0–99; percent of refund-tx ETH reward to refund
       refundRecipient,    // (Optional) Address, refund destination; defaults to first tx sender
-      refundTxHashes      // (Optional) Array[String], max 1; the tx whose coinbase delta is the refund basis. Defaults to the last tx
+      refundTxHashes      // (Optional) Array[String] or null, max 1; the tx whose coinbase delta is the refund basis. Defaults to the last tx
     }
   ]
 }
 ```
+
+`revertingTxHashes`, `droppingTxHashes`, and `refundTxHashes` may be omitted, set to `null`, or provided as arrays. Omitted and `null` values are treated as empty arrays.
 
 Response:
 
