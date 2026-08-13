@@ -13,11 +13,11 @@ Adding a valid auth token in the `X-Api-Key` header increases your rate limit.
   "method": "eth_sendBundle",
   "params": [
     {
-      txs,                // Array[String], signed transactions (hex) to execute atomically
+      txs,                // Array[String], signed transactions (hex) to execute atomically; may be empty to cancel a bundle
       blockNumber,        // (Optional) String, hex-encoded target block number; defaults to next block
       revertingTxHashes,  // (Optional) Array[String] or null, tx hashes allowed to revert or be discarded
       droppingTxHashes,   // (Optional) Array[String] or null, tx hashes allowed to be discarded but not revert
-      replacementUuid,    // (Optional) String, identifier for replacing or canceling this bundle
+      replacementUuid,    // (Optional) String, identifier for replacing or canceling this bundle; `uuid` is accepted as an alias
       refundPercent,      // (Optional) Number, 0–99; percent of refund-tx ETH reward to refund
       refundRecipient,    // (Optional) Address, refund destination; defaults to first tx sender
       refundTxHashes      // (Optional) Array[String] or null, max 1; the tx whose coinbase delta is the refund basis. Defaults to the last tx
@@ -27,6 +27,8 @@ Adding a valid auth token in the `X-Api-Key` header increases your rate limit.
 ```
 
 `revertingTxHashes`, `droppingTxHashes`, and `refundTxHashes` may be omitted, set to `null`, or provided as arrays. Omitted and `null` values are treated as empty arrays.
+
+A bundle with an empty `txs` array and a `replacementUuid` cancels the bundle carrying that identifier. The response is a bundle hash computed over the empty transaction set.
 
 Response:
 
@@ -55,7 +57,7 @@ Cancels a previously submitted bundle by its `replacementUuid`.
   "method": "eth_cancelBundle",
   "params": [
     {
-      replacementUuid  // String, the UUID provided when the bundle was submitted
+      replacementUuid  // String, the UUID provided when the bundle was submitted; `uuid` is accepted as an alias
     }
   ]
 }
