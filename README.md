@@ -2,8 +2,6 @@
 
 Documentation for submitting Ethereum transactions and bundles to our builder.
 
-> **status: alpha.** APIs may still change in the next few weeks; we'll keep changes to a minimum and announce them on [@ultrasoundbuilder](https://t.me/ultrasoundbuilder).
-
 - [Bundle RPC](bundle-rpc.md) — `eth_sendBundle` and friends.
 - [Bundle tracing](bundle-tracing.md) — `ultrasound_getBundleTrace` for bundle lifecycle.
 
