@@ -2,7 +2,13 @@
 
 JSON-RPC endpoints for submitting orderflow to Ultra Sound Builder.
 
-Adding a valid auth token in the `X-Api-Key` header increases your rate limit. 
+## Rate limits
+
+Unauthenticated requests are limited to 50 requests per minute per source IP. We are prioritizing onboarding additional orderflow: [contact us](README.md#questions) for a free API token and much higher limits, then include it in the `X-Api-Key` header.
+
+## Bundle inclusion
+
+Cielago considers candidate bundles greedily in descending order of their simulated total payment to the builder's coinbase address, after any configured refund. It does not rank by payment per unit of gas; lower gas use only breaks ties. Bundles are included when they fit the block's gas, blob-gas, nonce, and execution constraints.
 
 ## eth_sendBundle
 
