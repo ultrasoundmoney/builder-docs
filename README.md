@@ -31,7 +31,7 @@ Bundle RPC: `https://builder-rpc-us.ultrasound.money`
 
 Bundle RPC: `https://builder-rpc-jp.ultrasound.money`
 
-Submitting bundles to all three mainnet RPCs is advisable. Bundle flow is not currently gossiped between our builder instances, and the relay auction that matters most can change from slot to slot. We plan to add internal gossip over private fiber.
+We advise you to send your bundles to the endpoint you have the lowest latency to. Bundles are propagated to all instances.
 
 ## Hoodi
 
