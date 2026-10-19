@@ -64,6 +64,7 @@ Builder-computed identifier for the bundle. `revertingTxHashes` and `droppingTxH
       txs,                // Array[String], signed transactions (hex) to execute atomically; may be empty to cancel a bundle
       blockNumber,        // (Optional) String, hex-encoded target block number; defaults to next block
       revertingTxHashes,  // (Optional) Array[String] or null, tx hashes allowed to revert or be discarded
+      droppingTxHashes,   // (Optional) Array[String] or null, tx hashes allowed to be discarded but not revert
       targetPools,        // Array[String], pool addresses this bundle targets; may be omitted when canceling
       targetSlots,        // (Optional) Array[Array[String]], hex-encoded storage slots to target per pool, index-aligned with targetPools
       replacementUuid     // (Optional) String, identifier for replacing or canceling this bundle; `uuid` is accepted as an alias
