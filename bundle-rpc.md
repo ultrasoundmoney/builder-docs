@@ -34,7 +34,7 @@ Cielago considers candidate bundles greedily in descending order of their simula
 
 `revertingTxHashes`, `droppingTxHashes`, and `refundTxHashes` may be omitted, set to `null`, or provided as arrays. Omitted and `null` values are treated as empty arrays.
 
-A bundle with an empty `txs` array and a `replacementUuid` cancels the bundle carrying that identifier. The response is a bundle hash computed over the empty transaction set.
+A bundle with an empty `txs` array and a `replacementUuid` cancels the bundle carrying that identifier. The response is a bundle hash computed over the empty transaction set. `eth_cancelBundle` with the same `replacementUuid` also cancels it.
 
 Response:
 
@@ -51,6 +51,43 @@ Response:
 ### Bundle hash
 
 Builder-computed identifier for the bundle. `revertingTxHashes` and `droppingTxHashes` are treated as sets — their listing order does not affect the hash.
+
+## eth_sendEndOfBlockBundle
+
+```jsonc
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "eth_sendEndOfBlockBundle",
+  "params": [
+    {
+      txs,                // Array[String], signed transactions (hex) to execute atomically; may be empty to cancel a bundle
+      blockNumber,        // (Optional) String, hex-encoded target block number; defaults to next block
+      revertingTxHashes,  // (Optional) Array[String] or null, tx hashes allowed to revert or be discarded
+      droppingTxHashes,   // (Optional) Array[String] or null, tx hashes allowed to be discarded but not revert
+      targetPools,        // Array[String], pool addresses this bundle targets; may be omitted when canceling
+      targetSlots,        // (Optional) Array[Array[String]], hex-encoded storage slots to target per pool, index-aligned with targetPools
+      replacementUuid     // (Optional) String, identifier for replacing or canceling this bundle; `uuid` is accepted as an alias
+    }
+  ]
+}
+```
+
+After building a block, the builder simulates each end-of-block bundle whose target pools were modified by the block against the end-of-block state, and appends the bundles that succeed. With `targetSlots`, a pool matches only when one of its listed slots was modified; an empty slot list matches any slot of that pool.
+
+A bundle with an empty `txs` array and a `replacementUuid` cancels the end-of-block bundle carrying that identifier. The response is a bundle hash computed over the empty transaction set. `eth_cancelBundle` with the same `replacementUuid` also cancels it.
+
+Response:
+
+```jsonc
+{
+  "result": {
+    "bundleHash": "0x164d7d41f24b7f333af3b4a70b690cf93f636227165ea2b699fbb7eed09c46c7"
+  },
+  "error": null,
+  "id": 1
+}
+```
 
 ## eth_cancelBundle
 
