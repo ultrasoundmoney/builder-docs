@@ -31,7 +31,7 @@ Bundle RPC: `https://builder-rpc-us.ultrasound.money`
 
 Bundle RPC: `https://builder-rpc-jp.ultrasound.money`
 
-We advise you to send your bundles to the endpoint you have the lowest latency to. Bundles are propagated to all instances.
+We advise you to send your bundles to the endpoint you have the lowest latency to. Bundles are propagated to all instances, except those with a `replacementSeqNumber`.
 
 ## Hoodi
 

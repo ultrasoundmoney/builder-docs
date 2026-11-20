@@ -24,6 +24,7 @@ Cielago considers candidate bundles greedily in descending order of their simula
       revertingTxHashes,  // (Optional) Array[String] or null, tx hashes allowed to revert or be discarded
       droppingTxHashes,   // (Optional) Array[String] or null, tx hashes allowed to be discarded but not revert
       replacementUuid,    // (Optional) String, identifier for replacing or canceling this bundle; `uuid` is accepted as an alias
+      replacementSeqNumber, // (Optional) Number, monotonically increasing sequence for bundles sharing the same `replacementUuid`. Later bundles must have a higher sequence or they are dropped. If 0 or omitted, ordering falls back to builder receive time
       refundPercent,      // (Optional) Number, 0–99; percent of refund-tx ETH reward to refund
       refundRecipient,    // (Optional) Address, refund destination; defaults to first tx sender
       refundTxHashes      // (Optional) Array[String] or null, max 1; the tx whose coinbase delta is the refund basis. Defaults to the last tx
@@ -35,6 +36,8 @@ Cielago considers candidate bundles greedily in descending order of their simula
 `revertingTxHashes`, `droppingTxHashes`, and `refundTxHashes` may be omitted, set to `null`, or provided as arrays. Omitted and `null` values are treated as empty arrays.
 
 A bundle with an empty `txs` array and a `replacementUuid` cancels the bundle carrying that identifier. The response is a bundle hash computed over the empty transaction set. `eth_cancelBundle` with the same `replacementUuid` also cancels it.
+
+Empty-`txs` cancels follow the same `replacementSeqNumber` rule, and once a `replacementUuid` has a sequence number, new bundles for it without one are dropped. A dropped bundle still returns its bundle hash, but has no bundle trace.
 
 Response:
 
@@ -67,7 +70,8 @@ Builder-computed identifier for the bundle. `revertingTxHashes` and `droppingTxH
       droppingTxHashes,   // (Optional) Array[String] or null, tx hashes allowed to be discarded but not revert
       targetPools,        // Array[String], pool addresses this bundle targets; may be omitted when canceling
       targetSlots,        // (Optional) Array[Array[String]], hex-encoded storage slots to target per pool, index-aligned with targetPools
-      replacementUuid     // (Optional) String, identifier for replacing or canceling this bundle; `uuid` is accepted as an alias
+      replacementUuid,    // (Optional) String, identifier for replacing or canceling this bundle; `uuid` is accepted as an alias
+      replacementSeqNumber // (Optional) Number, monotonically increasing sequence for bundles sharing the same `replacementUuid`. Later bundles must have a higher sequence or they are dropped. If 0 or omitted, ordering falls back to builder receive time
     }
   ]
 }
@@ -76,6 +80,8 @@ Builder-computed identifier for the bundle. `revertingTxHashes` and `droppingTxH
 After building a block, the builder simulates each end-of-block bundle whose target pools were modified by the block against the end-of-block state, and appends the bundles that succeed. With `targetSlots`, a pool matches only when one of its listed slots was modified; an empty slot list matches any slot of that pool.
 
 A bundle with an empty `txs` array and a `replacementUuid` cancels the end-of-block bundle carrying that identifier. The response is a bundle hash computed over the empty transaction set. `eth_cancelBundle` with the same `replacementUuid` also cancels it.
+
+Empty-`txs` cancels follow the same `replacementSeqNumber` rule, and once a `replacementUuid` has a sequence number, new bundles for it without one are dropped. A dropped bundle still returns its bundle hash, but has no bundle trace.
 
 Response:
 
