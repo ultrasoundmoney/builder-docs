@@ -35,6 +35,8 @@ Cielago considers candidate bundles greedily in descending order of their simula
 
 `revertingTxHashes`, `droppingTxHashes`, and `refundTxHashes` may be omitted, set to `null`, or provided as arrays. Omitted and `null` values are treated as empty arrays.
 
+If your successive bundles are improving on the previous one (as opposed to being separate candidates) we strongly recommend using `replacementUuid` for efficient processing.
+
 A bundle with an empty `txs` array and a `replacementUuid` cancels the bundle carrying that identifier. The response is a bundle hash computed over the empty transaction set. `eth_cancelBundle` with the same `replacementUuid` also cancels it.
 
 Empty-`txs` cancels follow the same `replacementSeqNumber` rule, and once a `replacementUuid` has a sequence number, new bundles for it without one are dropped. A dropped bundle still returns its bundle hash, but has no bundle trace.
